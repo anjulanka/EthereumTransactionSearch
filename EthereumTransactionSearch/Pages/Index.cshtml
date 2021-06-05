@@ -1,0 +1,60 @@
+﻿@page
+@model IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Ethereum Transaction Search</h1>
+    <p>Eth Address search is only implemented. Ex: please use: 0xe6d2c63ef9044757338054ed8e938917de97b996815b0c8e30f97fad130101fe</p>
+</div>
+
+<form method="post">
+    <div class="input-group mb-3">
+
+
+        <span class="input-group-text">Ethereum address | Block number</span>
+        <input type="text" aria-label="EtherHashAddress" class="form-control" asp-for="userDetailsModel.EtherHashAddress">
+        <input type="text" aria-label="EtherBlock" class="form-control" asp-for="userDetailsModel.EtherBlock">
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search Transactions</button>
+    </div>
+    <div class="form-group">
+        <span asp-validation-for="userDetailsModel.EtherHashAddress" class="text-danger"></span>
+        <span asp-validation-for="userDetailsModel.EtherBlock" class="text-danger"></span>
+    </div>
+
+</form>
+
+
+@if(Model.UserSearchResultModel!=null && Model.UserSearchResultModel.Value!=null){
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">block hash</th>
+                <th scope="col">block number  </th>
+                <th scope="col">gas </th>
+                <th scope="col">hash </th>
+                <th scope="col">form </th>
+                <th scope="col">to </th>
+                <th scope="col">value </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>@Model.UserSearchResultModel.Blockhash</td>
+                <td>@Model.UserSearchResultModel.BlockNumber</td>
+                <td>@Model.UserSearchResultModel.Gas</td>
+                <td>@Model.UserSearchResultModel.Hash</td>
+                <td>@Model.UserSearchResultModel.From</td>
+                <td>@Model.UserSearchResultModel.To</td>
+                <td>@Model.UserSearchResultModel.Value</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+}
