@@ -11,6 +11,7 @@ namespace EthereumTransactionSearch.Models
         [Required]
         public string EtherHashAddress { get; set; }
         [Required]
-        public string EtherBlock { get; set; }
+        public int EtherBlock { get; set; }
+
     }
 }

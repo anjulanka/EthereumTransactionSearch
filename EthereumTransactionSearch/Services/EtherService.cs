@@ -21,18 +21,19 @@ namespace EthereumTransactionSearch.Services
             _webRequestService = webRequestService;
             _logger = logger;
         }
-        public async Task<GetTransactionByHashResponse> GetTransactionByHashAddress(GetTransactionByHashRequest getTransactionByHashRequest)
+
+        public async Task<GetBlockByNumberResponse> GetBlockByNumber(GetBlockByNumberRequest getBlockByNumberRequest)
         {
-            GetTransactionByHashResponse getTransactionByHashResponse = null;
+            GetBlockByNumberResponse getBlockByNumberResponse    = null;
 
             try
             {
-                var content = new StringContent(JsonSerializer.Serialize(getTransactionByHashRequest));
+                var content = new StringContent(JsonSerializer.Serialize(getBlockByNumberRequest));
 
                 //Auth is already passing /22b2ebe2940745b3835907b30e8257a4 in the URL
-                var requestResult = await _webRequestService.ProcessWebRequest("https://mainnet.infura.io/v3/22b2ebe2940745b3835907b30e8257a4", HttpMethod.Post, getTransactionByHashRequest);
+                var requestResult = await _webRequestService.ProcessWebRequest("https://mainnet.infura.io/v3/22b2ebe2940745b3835907b30e8257a4", HttpMethod.Post, getBlockByNumberRequest);
 
-                getTransactionByHashResponse = (GetTransactionByHashResponse)JsonSerializer.Deserialize(requestResult, typeof(GetTransactionByHashResponse));
+                getBlockByNumberResponse = (GetBlockByNumberResponse)JsonSerializer.Deserialize(requestResult, typeof(GetBlockByNumberResponse));
 
             }
             catch (Exception e)
@@ -40,8 +41,10 @@ namespace EthereumTransactionSearch.Services
                 // Log error     
                 _logger.LogError(e, e.Message);
             }
-            
-            return getTransactionByHashResponse;
+
+            return getBlockByNumberResponse;
         }
+
+      
     }
 }

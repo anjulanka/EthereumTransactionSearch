@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 
 namespace EthereumTransactionSearch.DTOs
 {
-    public class GetTransactionByHashResponse
+    public class GetBlockByNumberResponse
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }
         [JsonPropertyName("result")]
-        public ResultObject Value { get; set; }
+        public BlockByNumberResultObject BlockByNumberResultObject { get; set; }
     }
-    public class ResultObject
+    public class BlockByNumberResultObject
+    {
+        [JsonPropertyName("transactions")]
+       public List<Transaction> Transactions { get; set; }
+    }
+
+    public class Transaction
     {
         [JsonPropertyName("blockHash")]
         public string BlockHash { get; set; }
@@ -45,3 +51,5 @@ namespace EthereumTransactionSearch.DTOs
         public string Value { get; set; }
     }
 }
+
+

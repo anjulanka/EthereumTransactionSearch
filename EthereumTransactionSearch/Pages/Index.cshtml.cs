@@ -38,28 +38,38 @@ namespace EthereumTransactionSearch.Pages
 
             if (userDetailsModel != null)
             {
-                //Call Ether Service
-                var request = new GetTransactionByHashRequest()
+                UserSearchResultModel = new UserSearchResultModel();
+
+                var request = new GetBlockByNumberRequest()
                 {
-                    id = 1,
-                    transactionHash = new string[] { userDetailsModel.EtherHashAddress }
+                    BlockNumber = String.Format("0X{0:X}", userDetailsModel.EtherBlock)
                 };
 
-                var result = await _etherService.GetTransactionByHashAddress(request);
-                if (result!=null)
-                {
-                    UserSearchResultModel = new UserSearchResultModel()
-                    {
-                        Blockhash = result?.Value?.BlockHash,
-                        BlockNumber = result?.Value?.BlockNumber,
-                        From = result?.Value?.From,
-                        Gas = result?.Value?.Gas,
-                        Value = result?.Value?.Value,
-                        Hash = result?.Value?.Hash,
-                        To = result?.Value?.To
-                    };
+                var result = await _etherService.GetBlockByNumber(request);
 
-            }
+                //Find whether the input transaction is in the current ether Block
+                if (result.BlockByNumberResultObject != null)
+                {
+                    var getTransactionDetails = result.BlockByNumberResultObject.Transactions.FirstOrDefault(s => s.Hash == userDetailsModel.EtherHashAddress.Trim());
+
+                    if (getTransactionDetails != null)
+                    {
+                        UserSearchResultModel = new UserSearchResultModel()
+                        {
+                            Blockhash = getTransactionDetails.BlockHash,
+                            BlockNumber = getTransactionDetails.BlockNumber,
+                            From = getTransactionDetails.From,
+                            Gas = getTransactionDetails.Gas,
+                            Value = getTransactionDetails.Value,
+                            Hash = getTransactionDetails.Hash,
+                            To = getTransactionDetails.To,
+                            IsSearchCompleted = true
+                        };
+
+                    }
+
+                }
+
             }
             return Page();
         }

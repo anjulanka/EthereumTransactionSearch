@@ -7,7 +7,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Ethereum Transaction Search</h1>
-    <p>Eth Address search is only implemented. Ex: please use: 0xe6d2c63ef9044757338054ed8e938917de97b996815b0c8e30f97fad130101fe</p>
+    <p>Ex: Please Use Hash: 0xe6d2c63ef9044757338054ed8e938917de97b996815b0c8e30f97fad130101fe and Block: 9148873</p>
 </div>
 
 <form method="post">
@@ -25,6 +25,17 @@
     </div>
 
 </form>
+
+@if(Model.UserSearchResultModel!=null && Model.UserSearchResultModel.IsSearchCompleted){
+<div class="alert alert-success" role="alert">
+    Sucess!
+</div>
+}
+@if(Model.UserSearchResultModel!=null && !Model.UserSearchResultModel.IsSearchCompleted){
+<div class="alert alert-warning" role="alert">
+    Sorry can't find any records!
+</div>
+}
 
 
 @if(Model.UserSearchResultModel!=null && Model.UserSearchResultModel.Value!=null){

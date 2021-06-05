@@ -8,6 +8,6 @@ namespace EthereumTransactionSearch.Interfaces
 {
     public interface IEtherService
     {
-        Task<GetTransactionByHashResponse> GetTransactionByHashAddress(GetTransactionByHashRequest getTransactionByHashRequest);
+        Task<GetBlockByNumberResponse> GetBlockByNumber(GetBlockByNumberRequest getBlockByNumberRequest);
     }
 }
